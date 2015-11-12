@@ -39,17 +39,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
+import sys
 import smbus
 import time
 import math
-import RPi.GPIO as GPIO
 import struct
 
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 grayH= 0xF0
 grayL= 0x0F
 
@@ -270,3 +266,21 @@ def oled_putChar(C):
 def oled_putString(String):
     for i in range(len(String)):
         oled_putChar(String[i])
+
+if __name__ == "__main__":
+  if sys.argv[1] == "init":
+    oled_init()
+    oled_clearDisplay()
+    oled_setNormalDisplay()
+    oled_setVerticalMode()
+    time.sleep(.1)
+  elif sys.argv[1] == "print":
+    oled_setTextXY(int(sys.argv[4]), int(sys.argv[3]))
+    oled_putString(sys.argv[2])
+  elif sys.argv[1] == "clear":
+    if len(sys.argv) is 2:
+      oled_init()
+      oled_clearDisplay()
+    else:
+      oled_setTextXY(int(sys.argv[2]), 0)
+      oled_clearDisplay()
