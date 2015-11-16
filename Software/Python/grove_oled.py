@@ -275,7 +275,7 @@ if __name__ == "__main__":
     oled_setVerticalMode()
     time.sleep(.1)
   elif sys.argv[1] == "print":
-    oled_setTextXY(int(sys.argv[4]), int(sys.argv[3]))
+    oled_setTextXY(int(sys.argv[3]), int(sys.argv[4]))
     oled_putString(sys.argv[2])
   elif sys.argv[1] == "clear":
     if len(sys.argv) is 2:
